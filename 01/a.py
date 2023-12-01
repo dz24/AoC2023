@@ -42,10 +42,9 @@ def solver_b(inp: str) -> int:
             str_to_num(line, lnums)
             str_to_num(line, lnums, rev=True)
         nums_l.append(int(f"{lnums[0]}{lnums[-1]}"))
-    # return sum(nums_l)
     return sum(nums_l)
 
 
 part_a = "./part_a.txt"
-print(solver_a(part_a), solver_a(part_a) == 56108)
-print(solver_b(part_a), solver_b(part_a) == 55652)
+print(solver_a(part_a))
+print(solver_b(part_a))
