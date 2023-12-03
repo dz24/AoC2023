@@ -1,9 +1,5 @@
-NSYM = "0123456789."
-NINE = [[-1, -1], [-1, 0], [-1, 1], [0, -1], [0, 1], [1, -1], [1, 0], [1, 1]]
-
-
-def parser(inp: str, pad: int = 1) -> list[str]:
-    # parses and pads grid, and finds symbol coordinates.
+def parser(inp: str, pad: int = 0) -> list[str]:
+    # parses grid and finds symbol coordinates.
     grid = []
     sym_coord = []
     with open(inp, "r") as read:
@@ -11,16 +7,8 @@ def parser(inp: str, pad: int = 1) -> list[str]:
             rip = line.rstrip()
             grid.append(rip)
             for idx_x, let in enumerate(rip):
-                if let not in NSYM:
+                if let not in "0123456789.":
                     sym_coord.append([idx_x + pad, idx_y + pad])
-
-    if pad:
-        str_len = len(grid[0]) + pad * 2
-        grid2 = ["." * str_len]
-        for line in grid:
-            grid2.append("." + line + ".")
-        grid2.append("." * str_len)
-        return grid2, sym_coord
     return grid, sym_coord
 
 
@@ -30,7 +18,7 @@ def nums_x(line, y_idx, x_idx, numdic):
         if let.isnumeric():
             num.append(let)
             idxs.append(i)
-        else:
+        if not let.isnumeric() or i == len(line) - 1:
             if any(abs(x_idx - j) <= 1 for j in idxs):
                 numdic[f"{idxs[0]}-{y_idx}"] = int("".join(num))
             num, idxs = [], []
